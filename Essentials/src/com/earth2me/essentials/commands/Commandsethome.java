@@ -3,8 +3,11 @@ package com.earth2me.essentials.commands;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.LocationUtil;
 import com.earth2me.essentials.utils.NumberUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.block.BlockFace;
 
 import java.util.Locale;
 
@@ -46,6 +49,10 @@ public class Commandsethome extends EssentialsCommand {
         }
         if ("bed".equals(name) || NumberUtil.isInt(name)) {
             throw new NoSuchFieldException(tl("invalidHomeName"));
+        }
+
+        if (user.getBase().getLocation().getY() <= 1) {
+            throw new Exception(ChatColor.translateAlternateColorCodes('&', "&cYou cannot set your home on bedrock."));
         }
 
         if (!ess.getSettings().isTeleportSafetyEnabled() && LocationUtil.isBlockUnsafeForUser(usersHome, location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ())) {
